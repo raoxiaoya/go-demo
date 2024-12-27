@@ -1,0 +1,30 @@
+set_robust_list(0x7fdf622759e0, 24)     = 0
+sigaltstack(NULL, {ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+sigaltstack({ss_sp=0xc00006a000, ss_flags=0, ss_size=32768}, NULL) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+gettid()                                = 5550
+futex(0x5835a0, FUTEX_WAKE_PRIVATE, 1)  = 1
+futex(0xc000046f48, FUTEX_WAIT_PRIVATE, 0, NULL) = -1 EAGAIN (资源暂时不可用)
+futex(0x5835a0, FUTEX_WAKE_PRIVATE, 1)  = 0
+futex(0xc000046f48, FUTEX_WAIT_PRIVATE, 0, NULL) = 0
+fcntl(3, F_GETFL)                       = 0x8000 (flags O_RDONLY|O_LARGEFILE)
+fcntl(3, F_SETFL, O_RDONLY|O_NONBLOCK|O_LARGEFILE) = 0
+epoll_create1(EPOLL_CLOEXEC)            = 4
+eventfd2(0, EFD_CLOEXEC|EFD_NONBLOCK)   = 5
+epoll_ctl(4, EPOLL_CTL_ADD, 5, {EPOLLIN, {u32=5906552, u64=5906552}}) = 0
+epoll_ctl(4, EPOLL_CTL_ADD, 3, {EPOLLIN|EPOLLOUT|EPOLLRDHUP|EPOLLET, {u32=2255486977, u64=9214269989797756929}}) = -1 EPERM (不允许的操作)
+fcntl(3, F_GETFL)                       = 0x8800 (flags O_RDONLY|O_NONBLOCK|O_LARGEFILE)
+fcntl(3, F_SETFL, O_RDONLY|O_LARGEFILE) = 0
+openat(AT_FDCWD, "./demos/zero_copy/target.txt", O_RDWR|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 6
+fcntl(6, F_GETFL)                       = 0x8002 (flags O_RDWR|O_LARGEFILE)
+fcntl(6, F_SETFL, O_RDWR|O_NONBLOCK|O_LARGEFILE) = 0
+epoll_ctl(4, EPOLL_CTL_ADD, 6, {EPOLLIN|EPOLLOUT|EPOLLRDHUP|EPOLLET, {u32=2255486978, u64=9214269989797756930}}) = -1 EPERM (不允许的操作)
+fcntl(6, F_GETFL)                       = 0x8802 (flags O_RDWR|O_NONBLOCK|O_LARGEFILE)
+fcntl(6, F_SETFL, O_RDWR|O_LARGEFILE)   = 0
+uname({sysname="Linux", nodename="localhost.localdomain", ...}) = 0
+read(3, "1111111111111111\r\n22222222222222"..., 32768) = 70
+write(6, "1111111111111111\r\n22222222222222"..., 70) = 70
+read(3, "", 32768)                      = 0
+close(6)                                = 0
+futex(0xc000046f48, FUTEX_WAIT_PRIVATE, 0, NULL) = ?
++++ exited with 0 +++

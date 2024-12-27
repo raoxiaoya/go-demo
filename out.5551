@@ -1,0 +1,7 @@
+set_robust_list(0x7fdf61a749e0, 24)     = 0
+sigaltstack(NULL, {ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+sigaltstack({ss_sp=0xc000076000, ss_flags=0, ss_size=32768}, NULL) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+gettid()                                = 5551
+futex(0x5a23d8, FUTEX_WAIT_PRIVATE, 0, NULL) = ?
++++ exited with 0 +++
