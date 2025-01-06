@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-demo/demos/zero_copy"
+	"go-demo/demos/sort"
 )
 
 func main() {
@@ -19,5 +19,7 @@ func main() {
 
 	// log.Println()
 
-	zero_copy.Run()
+	// zero_copy.Run()
+
+	sort.Run()
 }
