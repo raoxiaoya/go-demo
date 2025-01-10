@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-demo/demos/sort"
+	"go-demo/demos/go_eval"
 )
 
 func main() {
@@ -21,5 +21,13 @@ func main() {
 
 	// zero_copy.Run()
 
-	sort.Run()
+	// sort.Run()
+
+	// iterator.Run()
+
+	// unique_use.Run()
+
+	// priority_select.Run()
+
+	go_eval.Run()
 }
