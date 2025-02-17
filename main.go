@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"go-demo/demos/exercise"
+	"go-demo/demos/progressbar"
 	"os"
 	"strings"
 )
@@ -36,7 +36,9 @@ func main() {
 
 	// go_sqlite.Run2()
 
-	exercise.Run()
+	// exercise.Run()
+
+	progressbar.Run()
 }
 
 func data() {
