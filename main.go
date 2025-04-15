@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"go-demo/demos/progressbar"
+	"go-demo/demos/child_process_stdio"
 	"os"
 	"strings"
 )
@@ -38,7 +38,7 @@ func main() {
 
 	// exercise.Run()
 
-	progressbar.Run()
+	child_process_stdio.Run()
 }
 
 func data() {
