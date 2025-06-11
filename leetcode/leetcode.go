@@ -1,6 +1,7 @@
 package leetcode
 
 import (
+	"fmt"
 	"strconv"
 )
 
@@ -274,11 +275,27 @@ OutputNodes(res)
 
 ////////////////////////////////////////////////
 
+// 删除有序数组中的重复项
+// nums 是一个升序的数组，过滤掉重复值，然后返回数组长度
+func removeDuplicates(nums []int) int {
+	newlist := nums
+	k := 0
+	for _, v := range nums {
+		if k > 0 && newlist[k-1] == v {
+			continue
+		}
+		newlist[k] = v
+		k++
+	}
+	nums = newlist[:k]
+	return k
+}
+
 ////////////////////////////////////////////////
 
 func Run() {
-	l1 := buildNodes([]int{1, 6, 9})
-	l2 := buildNodes([]int{2, 3, 4})
-	res := mergeTwoLists(l1, l2)
-	OutputNodes(res)
+	list := []int{1, 1, 2, 3, 4, 6, 9}
+	res := removeDuplicates(list)
+	println(res)
+	fmt.Println(list)
 }
