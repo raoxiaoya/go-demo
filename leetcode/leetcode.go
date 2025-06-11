@@ -1,0 +1,284 @@
+package leetcode
+
+import (
+	"strconv"
+)
+
+// 两数之和
+func twoSum(nums []int, target int) []int {
+	total := make(map[int]int)
+	for i, v := range nums {
+		if idx, ok := total[target-v]; ok {
+			return []int{idx, i}
+		}
+		total[v] = i
+	}
+	return nil
+}
+
+////////////////////////////////////////////////
+
+// 两数相加
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	var l1s, l2s string
+	for {
+		if l1 != nil {
+			l1s += strconv.Itoa(l1.Val)
+			l1 = l1.Next
+		} else {
+			l1s += "0"
+		}
+		if l2 != nil {
+			l2s += strconv.Itoa(l2.Val)
+			l2 = l2.Next
+		} else {
+			l2s += "0"
+		}
+
+		if l1 == nil && l2 == nil {
+			break
+		}
+	}
+
+	// println("l1s", l1s)
+	// println("l2s", l2s)
+
+	// 无论是int还是int64都是有上限的，但是链表却是无限的，因此不能转换成int类型来存储
+	n := 0
+	c := len(l1s)
+	sums := make([]int, c)
+	for i, v := range l1s {
+		v1, _ := strconv.Atoi(string(v))
+		v2, _ := strconv.Atoi(string(l2s[i]))
+		add := v1 + v2 + n
+		if add >= 10 {
+			n = 1
+			add -= 10
+		} else {
+			n = 0
+		}
+		sums[c-i-1] = add
+	}
+	if n == 1 {
+		sums = append([]int{1}, sums...)
+	}
+
+	// fmt.Println("sums", sums)
+
+	var res *ListNode
+	for _, v := range sums {
+		if res == nil {
+			res = &ListNode{Val: v}
+		} else {
+			res = &ListNode{Val: v, Next: res}
+		}
+	}
+
+	return res
+}
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+// 链表的构造与 vals 顺序相同
+func buildNodes(vals []int) *ListNode {
+	var res *ListNode
+	for i := len(vals) - 1; i >= 0; i-- {
+		if res == nil {
+			res = &ListNode{Val: vals[i]}
+		} else {
+			res = &ListNode{Val: vals[i], Next: res}
+		}
+	}
+
+	return res
+}
+
+func OutputNodes(in *ListNode) {
+	for {
+		if in == nil {
+			break
+		}
+		println(in.Val)
+		in = in.Next
+	}
+}
+
+/**
+
+// l1 := buildNodes([]int{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
+
+// l1 := buildNodes([]int{9, 9, 9, 9, 9, 9, 9})
+// l2 := buildNodes([]int{9, 9, 9, 9})
+
+l1 := buildNodes([]int{2, 4, 3})
+l2 := buildNodes([]int{5, 6, 4})
+
+// l1 := buildNodes([]int{0})
+// l2 := buildNodes([]int{0})
+
+res := addTwoNumbers(l1, l2)
+
+// OutputNodes(l1)
+// OutputNodes(l2)
+OutputNodes(res)
+
+
+*/
+
+////////////////////////////////////////////////
+
+// 无重复字符的最长子串的长度
+// abcabcbb --> abc
+// bbbbb --> b
+// pwwkew --> wke
+// b --> b
+// dvdf --> vdf
+func lengthOfLongestSubstring(s string) int {
+	bt := []byte(s)
+	var max int
+	arr := make(map[byte]int)
+	for key, val := range bt {
+		before, ok := arr[val]
+		if ok {
+			if max < len(arr) {
+				max = len(arr)
+			}
+			for v, k := range arr {
+				if k <= before {
+					delete(arr, v)
+				}
+			}
+		}
+		arr[val] = key
+	}
+	if max < len(arr) {
+		max = len(arr)
+	}
+
+	return max
+}
+
+func lengthOfLongestSubstring2(s string) int {
+	var res int
+	m := map[byte]bool{}
+	for l, r := 0, 0; r < len(s); r++ {
+		for l < r && m[s[r]] {
+			m[s[l]] = false
+			l++
+		}
+		m[s[r]] = true
+		res = max(res, r-l+1)
+	}
+	return res
+}
+
+// //////////////////////////////////////////////
+// 最长公共前缀
+// ["flower","flow","flight"] --> "fl"
+// ["dog","racecar","car"] --> ""
+func longestCommonPrefix(strs []string) string {
+	for i := 0; i < len(strs[0]); i++ {
+		for j := 1; j < len(strs); j++ {
+			if i == len(strs[j]) || strs[0][i] != strs[j][i] {
+				return strs[0][:i]
+			}
+		}
+	}
+	return strs[0]
+}
+
+// //////////////////////////////////////////////
+// 有效的括号
+// () --> true
+// ()[]{} --> true
+// (] --> false
+// ([]) --> true
+// (([]){}) --> true
+// (([)]{}) --> false
+func isValid(s string) bool {
+	stack := make([]byte, 0)
+	for i := 0; i < len(s); i++ {
+		if len(stack) == 0 && (s[i] == ')' || s[i] == ']' || s[i] == '}') {
+			return false
+		}
+		if s[i] == '(' || s[i] == '[' || s[i] == '{' {
+			stack = append(stack, s[i])
+		} else if s[i] == ')' && stack[len(stack)-1] == '(' {
+			stack = stack[:len(stack)-1]
+		} else if s[i] == ']' && stack[len(stack)-1] == '[' {
+			stack = stack[:len(stack)-1]
+		} else if s[i] == '}' && stack[len(stack)-1] == '{' {
+			stack = stack[:len(stack)-1]
+		} else {
+			return false
+		}
+	}
+	if len(stack) != 0 {
+		return false
+	}
+	return true
+}
+
+////////////////////////////////////////////////
+// 合并两个有序链表
+// [1,2,4] [1,3,4] --> [1,1,2,3,4,4]
+// [] [] --> []
+// [] [0] --> [0]
+// [1,6,9] [2,3,4] --> [1,2,3,4,6,9]
+
+func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
+	var list3, node, tmp *ListNode
+	for {
+		// fmt.Println("list1.Val:", list1.Val, "list2.Val:", list2.Val)
+		if list1 != nil && list2 != nil {
+			if list1.Val <= list2.Val {
+				tmp = &ListNode{Val: list1.Val}
+				list1 = list1.Next
+			} else {
+				tmp = &ListNode{Val: list2.Val}
+				list2 = list2.Next
+			}
+		} else if list2 != nil {
+			tmp = &ListNode{Val: list2.Val}
+			list2 = list2.Next
+		} else if list1 != nil {
+			tmp = &ListNode{Val: list1.Val}
+			list1 = list1.Next
+		}
+		if node == nil {
+			node = tmp
+		} else {
+			node.Next = tmp
+			node = tmp
+		}
+		if list3 == nil {
+			list3 = node
+		}
+		if list1 == nil && list2 == nil {
+			return list3
+		}
+	}
+}
+
+/*
+
+l1 := buildNodes([]int{1, 6, 9})
+l2 := buildNodes([]int{2, 3, 4})
+res := mergeTwoLists(l1, l2)
+OutputNodes(res)
+
+*/
+
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+
+func Run() {
+	l1 := buildNodes([]int{1, 6, 9})
+	l2 := buildNodes([]int{2, 3, 4})
+	res := mergeTwoLists(l1, l2)
+	OutputNodes(res)
+}

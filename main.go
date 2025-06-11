@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"go-demo/demos/child_process_stdio"
+	"go-demo/leetcode"
 	"os"
 	"strings"
 )
@@ -38,7 +38,9 @@ func main() {
 
 	// exercise.Run()
 
-	child_process_stdio.Run()
+	// child_process_stdio.Run()
+
+	leetcode.Run()
 }
 
 func data() {
