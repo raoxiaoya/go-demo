@@ -292,10 +292,25 @@ func removeDuplicates(nums []int) int {
 }
 
 ////////////////////////////////////////////////
+// 删除元素
+func removeElement(nums []int, val int) int {
+    newlist := nums
+	k := 0
+	for _, v := range nums {
+		if val != v {
+			newlist[k] = v
+			k++
+		}
+	}
+	nums = newlist[:k]
+	return k
+}
+
+////////////////////////////////////////////////
 
 func Run() {
 	list := []int{1, 1, 2, 3, 4, 6, 9}
-	res := removeDuplicates(list)
+	res := removeElement(list, 4)
 	println(res)
 	fmt.Println(list)
 }
