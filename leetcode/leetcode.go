@@ -1,7 +1,6 @@
 package leetcode
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -291,10 +290,10 @@ func removeDuplicates(nums []int) int {
 	return k
 }
 
-////////////////////////////////////////////////
+// //////////////////////////////////////////////
 // 删除元素
 func removeElement(nums []int, val int) int {
-    newlist := nums
+	newlist := nums
 	k := 0
 	for _, v := range nums {
 		if val != v {
@@ -308,9 +307,93 @@ func removeElement(nums []int, val int) int {
 
 ////////////////////////////////////////////////
 
+// 找出字符串中第一个匹配项的下标
+// 输入：haystack = "sadbutsad", needle = "sad"
+// 输出：0
+// 解释："sad" 在下标 0 和 6 处匹配。
+// 第一个匹配项的下标是 0 ，所以返回 0 。
+func strStr(haystack string, needle string) int {
+	position := -1
+	searchLen := len(needle)
+	if searchLen == 0 {
+		return position
+	}
+	for i := range len(haystack) {
+		sub := haystack[i:]
+		if len(sub) >= searchLen && sub[:searchLen] == needle {
+			return i
+		}
+	}
+
+	return position
+}
+
+// //////////////////////////////////////////////
+// 搜索插入位置
+// 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+// nums 为 无重复元素 的 升序 排列数组
+// 请必须使用时间复杂度为 O(log n) 的算法。
+// 输入: nums = [1,3,5,6], target = 5
+// 输出: 2
+// 输入: nums = [1,3,5,6], target = 2
+// 输出: 1
+// 输入: nums = [1,3,5,6], target = 7
+// 输出: 4
+func searchInsert(nums []int, target int) int {
+	l := len(nums)
+	left := 0
+	right := l - 1
+	res := l
+	for {
+		pos := (right-left)/2 + left
+		if target <= nums[pos] {
+			res = pos
+			right = pos - 1
+		} else {
+			left = pos + 1
+		}
+		if left > right {
+			break
+		}
+	}
+	return res
+}
+
+// //////////////////////////////////////////////
+// 最后一个单词的长度
+// 给你一个字符串 s，由若干单词组成，单词前后用一些空格字符隔开。返回字符串中 最后一个 单词的长度。
+// 单词 是指仅由字母组成、不包含任何空格字符的最大子字符串。
+// s 仅有英文字母和空格 ' ' 组成
+// s 中至少存在一个单词
+func lengthOfLastWord(s string) int {
+	l := len(s)
+	var left, right = -1, 0
+	for i := l - 1; i >= 0; i-- {
+		if s[i] != ' ' && right == 0 {
+			right = i
+		}
+		if s[i] == ' ' && right != 0 {
+			left = i
+			break
+		}
+	}
+	// println("left:", left, "right:", right)
+	return right - left
+}
+
+////////////////////////////////////////////////
+// 加一
+// 给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。
+// 最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。
+// 你可以假设除了整数 0 之外，这个整数不会以零开头。
+func plusOne(digits []int) []int {
+    return nil
+}
+////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+
 func Run() {
-	list := []int{1, 1, 2, 3, 4, 6, 9}
-	res := removeElement(list, 4)
+	res := lengthOfLastWord("joyboy")
 	println(res)
-	fmt.Println(list)
 }
