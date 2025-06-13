@@ -1,6 +1,7 @@
 package leetcode
 
 import (
+	"fmt"
 	"strconv"
 )
 
@@ -381,19 +382,96 @@ func lengthOfLastWord(s string) int {
 	return right - left
 }
 
-////////////////////////////////////////////////
+// //////////////////////////////////////////////
 // 加一
 // 给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。
 // 最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。
 // 你可以假设除了整数 0 之外，这个整数不会以零开头。
+// 输入：digits = [1,2,3]
+// 输出：[1,2,4]
+// 输入：digits = [4,3,2,1]
+// 输出：[4,3,2,2]
+// 输入：digits = [9]
+// 输出：[1,0]
 func plusOne(digits []int) []int {
-    return nil
+	l := len(digits)
+	for i := l - 1; i >= 0; i-- {
+		digits[i] += 1
+		if digits[i] == 10 {
+			digits[i] = 0
+		} else {
+			break
+		}
+	}
+	if digits[0] == 0 {
+		digits = append([]int{1}, digits...)
+	}
+	return digits
 }
-////////////////////////////////////////////////
+
+// //////////////////////////////////////////////
+// 二进制求和
+// 给你两个二进制字符串 a 和 b ，以二进制字符串的形式返回它们的和。
+// 输入:a = "11", b = "1"
+// 输出："100"
+// 输入：a = "1010", b = "1011"
+// 输出："10101"
+// a 和 b 仅由字符 '0' 或 '1' 组成
+// 字符串如果不是 "0" ，就不含前导零
+func addBinary(a string, b string) string {
+	posa := len(a) - 1
+	posb := len(b) - 1
+	var stra, strb, ext, res string
+	for {
+		if posa < 0 && posb < 0 {
+			if ext == "1" {
+				res = "1" + res
+			}
+			break
+		}
+		if posa < 0 {
+			stra = ""
+		} else {
+			stra = string(a[posa])
+		}
+		if posb < 0 {
+			strb = ""
+		} else {
+			strb = string(b[posb])
+		}
+		sum := ""
+		if stra == "1" {
+			sum = sum + stra
+		}
+		if strb == "1" {
+			sum = sum + strb
+		}
+		if ext == "1" {
+			sum = sum + ext
+		}
+		if len(sum) == 0 {
+			res = "0" + res
+		} else if len(sum) == 1 {
+			res = "1" + res
+		} else if len(sum) == 2 {
+			res = "0" + res
+		} else if len(sum) == 3 {
+			res = "1" + res
+		}
+		if len(sum) >= 2 {
+			ext = "1"
+		} else {
+			ext = ""
+		}
+		posa--
+		posb--
+	}
+	return res
+}
 
 ////////////////////////////////////////////////
 
 func Run() {
-	res := lengthOfLastWord("joyboy")
-	println(res)
+	res := addBinary("11", "1")
+	fmt.Println(res)
 }
