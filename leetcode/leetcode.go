@@ -469,9 +469,106 @@ func addBinary(a string, b string) string {
 	return res
 }
 
+// //////////////////////////////////////////////
+// 爬楼梯
+// 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
+// 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+// 输入：n = 2
+// 输出：2
+// 输入：n = 3
+// 输出：3
+// 动态规划问题：f(x)=f(x−1)+f(x−2)
+func climbStairs(n int) int {
+	p, q, r := 0, 0, 1
+	for i := 1; i <= n; i++ {
+		p = q
+		q = r
+		r = p + q
+	}
+	return r
+}
+
+// //////////////////////////////////////////////
+// 删除排序链表中的重复元素
+// 给定一个已排序的链表的头 head ， 删除所有重复的元素，使每个元素只出现一次 。返回 已排序的链表 。
+func deleteDuplicates(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+	cur := head
+	for cur.Next != nil {
+		if cur.Val == cur.Next.Val {
+			cur.Next = cur.Next.Next
+		} else {
+			cur = cur.Next
+		}
+	}
+
+	return head
+}
+
+// //////////////////////////////////////////////
+// 合并两个有序数组
+// 输入：nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+// 输出：[1,2,2,3,5,6]
+// 输入：nums1 = [1], m = 1, nums2 = [], n = 0
+// 输出：[1]
+// 输入：nums1 = [0], m = 0, nums2 = [1], n = 1
+// 输出：[1]
+// 输入：nums1 = [1,2,3,7,9,10,0,0,0], m = 9, nums2 = [2,5,6], n = 3
+// 输出：[1,2,2,3,5,6,7,9,10]
+func merge(nums1 []int, m int, nums2 []int, n int) {
+	sorted := make([]int, 0, m+n)
+    p1, p2 := 0, 0
+    for {
+        if p1 == m {
+            sorted = append(sorted, nums2[p2:]...)
+            break
+        }
+        if p2 == n {
+            sorted = append(sorted, nums1[p1:]...)
+            break
+        }
+        if nums1[p1] < nums2[p2] {
+            sorted = append(sorted, nums1[p1])
+            p1++
+        } else {
+            sorted = append(sorted, nums2[p2])
+            p2++
+        }
+    }
+    copy(nums1, sorted)
+}
+// nums1 := []int{1, 2, 3, 7, 8, 10, 0, 0, 0}
+// nums2 := []int{2, 5, 6}
+// merge(nums1, 6, nums2, 3)
+
+// nums1 := []int{1}
+// nums2 := []int{}
+// merge(nums1, 1, nums2, 0)
+
+// nums1 := []int{0}
+// nums2 := []int{1}
+// merge(nums1, 0, nums2, 1)
+
+// nums1 := []int{1,0}
+// nums2 := []int{2}
+// merge(nums1, 1, nums2, 1)
+
+// nums1 := []int{4,0,0,0,0,0}
+// nums2 := []int{1,2,3,5,6}
+// merge(nums1, 1, nums2, 5)
+
+////////////////////////////////////////////////
+
 ////////////////////////////////////////////////
 
 func Run() {
-	res := addBinary("11", "1")
-	fmt.Println(res)
+	// res := climbStairs(5)
+	// fmt.Println(res)
+
+	
+
+
+	fmt.Println(nums1)
 }
