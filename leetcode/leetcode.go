@@ -519,26 +519,27 @@ func deleteDuplicates(head *ListNode) *ListNode {
 // 输出：[1,2,2,3,5,6,7,9,10]
 func merge(nums1 []int, m int, nums2 []int, n int) {
 	sorted := make([]int, 0, m+n)
-    p1, p2 := 0, 0
-    for {
-        if p1 == m {
-            sorted = append(sorted, nums2[p2:]...)
-            break
-        }
-        if p2 == n {
-            sorted = append(sorted, nums1[p1:]...)
-            break
-        }
-        if nums1[p1] < nums2[p2] {
-            sorted = append(sorted, nums1[p1])
-            p1++
-        } else {
-            sorted = append(sorted, nums2[p2])
-            p2++
-        }
-    }
-    copy(nums1, sorted)
+	p1, p2 := 0, 0
+	for {
+		if p1 == m {
+			sorted = append(sorted, nums2[p2:]...)
+			break
+		}
+		if p2 == n {
+			sorted = append(sorted, nums1[p1:]...)
+			break
+		}
+		if nums1[p1] < nums2[p2] {
+			sorted = append(sorted, nums1[p1])
+			p1++
+		} else {
+			sorted = append(sorted, nums2[p2])
+			p2++
+		}
+	}
+	copy(nums1, sorted)
 }
+
 // nums1 := []int{1, 2, 3, 7, 8, 10, 0, 0, 0}
 // nums2 := []int{2, 5, 6}
 // merge(nums1, 6, nums2, 3)
@@ -559,16 +560,55 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 // nums2 := []int{1,2,3,5,6}
 // merge(nums1, 1, nums2, 5)
 
+// fmt.Println(nums1)
+// //////////////////////////////////////////////
+// 买卖股票的最佳时机
+// 给定一个数组 prices ，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
+// 你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
+// 返回你可以从这笔交易中获取的最大利润。如果你不能获取任何利润，返回 0 。
+// 输入：[7,1,5,3,6,4]
+// 输出：5
+// 输入：prices = [7,6,4,3,1]
+// 输出：0
+// 输入：prices = [2,1,2,0,1]
+// 输出：1
+func maxProfit(prices []int) int {
+	min := prices[0]
+	res := 0
+	for i := 1; i < len(prices); i++ {
+		if prices[i] < min {
+			min = prices[i]
+		} else if prices[i]-min > res {
+			res = prices[i] - min
+		}
+	}
+	return res
+}
+// res := maxProfit([]int{7, 1, 5, 3, 6, 4})
+// res := maxProfit([]int{7, 6, 4, 3, 1})
+// res := maxProfit([]int{2, 1, 2, 0, 1})
+// res := maxProfit([]int{2, 1})
+// res := maxProfit2([]int{2, 1, 2, 1, 0, 0, 1})
+
 ////////////////////////////////////////////////
+// 只出现一次的数字
+// 
+// 给你一个 非空 整数数组 nums ，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+// 你必须设计并实现线性时间复杂度的算法来解决此问题，且该算法只使用常量额外空间。
+// 输入：nums = [2,2,1]
+// 输出：1
+// 输入：nums = [4,1,2,1,2]
+// 输出：4
+// 输入：nums = [1]
+// 输出：1
+func singleNumber(nums []int) int {
+	l := len(nums)
+    res := [l]int{}
+}
 
 ////////////////////////////////////////////////
 
 func Run() {
-	// res := climbStairs(5)
-	// fmt.Println(res)
-
-	
-
-
-	fmt.Println(nums1)
+	res := maxProfit([]int{2, 1, 2, 1, 0, 0, 1})
+	fmt.Println(res)
 }
