@@ -584,15 +584,16 @@ func maxProfit(prices []int) int {
 	}
 	return res
 }
+
 // res := maxProfit([]int{7, 1, 5, 3, 6, 4})
 // res := maxProfit([]int{7, 6, 4, 3, 1})
 // res := maxProfit([]int{2, 1, 2, 0, 1})
 // res := maxProfit([]int{2, 1})
 // res := maxProfit2([]int{2, 1, 2, 1, 0, 0, 1})
 
-////////////////////////////////////////////////
+// //////////////////////////////////////////////
 // 只出现一次的数字
-// 
+//
 // 给你一个 非空 整数数组 nums ，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
 // 你必须设计并实现线性时间复杂度的算法来解决此问题，且该算法只使用常量额外空间。
 // 输入：nums = [2,2,1]
@@ -601,14 +602,84 @@ func maxProfit(prices []int) int {
 // 输出：4
 // 输入：nums = [1]
 // 输出：1
+// 原理：安慰异或的特性：a ^ a = 0 and a ^ 0 = a，并且遵循交换律，即 a ^ b ^ a = a ^ a ^ b
+// 这个解法的确很精妙
 func singleNumber(nums []int) int {
-	l := len(nums)
-    res := [l]int{}
+	result := 0
+	for _, num := range nums {
+		result ^= num
+		println(num, result)
+	}
+	return result
+}
+
+/*
+652
+39505485,39656582
+1326,1
+
+update `read6_read_listen_time_day` SET `userid` = '39656582' WHERE `userid` = '39505485' AND `activity_id` = '652' ;
+update `read6_score_log` SET `userid` = '39656582' WHERE `userid` = '39505485' AND `activity_id` = '652' ;
+update `read6_task_log` SET `userid` = '39656582' WHERE `userid` = '39505485' AND `activity_id` = '652' ;
+update `read6_user_guide` SET `userid` = '39656582' WHERE `userid` = '39505485' AND `activity_id` = '652' ;
+-- read6_user_data
+-- read6_success_log
+
+*/
+////////////////////////////////////////////////
+// 环形链表
+// 给你一个链表的头节点 head ，判断链表中是否有环。
+//
+// 如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。注意：pos 不作为参数进行传递 。仅仅是为了标识链表的实际情况。
+//
+// 如果链表中存在环 ，则返回 true 。 否则，返回 false 。
+// 输入：head = [3,2,0,-4], pos = 1
+// 输出：true
+// 输入：head = [1,2], pos = 0
+// 输出：true
+// 输入：head = [1], pos = -1
+// 输出：false
+func hasCycle(head *ListNode) bool {
+	data := make(map[*ListNode]struct{})
+	for {
+		if head == nil {
+			return false
+		}
+
+		if _, ok := data[head]; ok {
+			return true
+		} else {
+			data[head] = struct{}{}
+		}
+
+		head = head.Next
+	}
+}
+
+// 快慢指针，俗称龟兔赛跑，兔子每次走两步，乌龟每次走一步，如果存在回环，那这个回环一定在末尾，于是兔子先进入回环并在里面转圈，
+// 乌龟珊珊来迟，但总有某个时刻能碰到一起，但是这个算法可能耗时多一点，但是占用空间小，空间复杂度为 O(1)
+func hasCycle2(head *ListNode) bool {
+	if head == nil || head.Next == nil {
+		return false
+	}
+	slow, fast := head, head
+	for {
+		if fast == nil || fast.Next == nil {
+			break
+		}
+		slow = slow.Next
+		fast = fast.Next.Next
+		if slow == fast {
+			return true
+		}
+	}
+	return false
 }
 
 ////////////////////////////////////////////////
 
 func Run() {
-	res := maxProfit([]int{2, 1, 2, 1, 0, 0, 1})
+	l1 := buildNodes([]int{-21, 10, 17, 8, 4, 26, 5, 35, 33, -7, -16, 27, -12, 6, 29, -12, 5, 9, 20, 14, 14, 2, 13, -24, 21, 23, -21, 5})
+	res := hasCycle(l1)
 	fmt.Println(res)
 }
