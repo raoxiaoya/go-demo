@@ -10,6 +10,8 @@ import (
 
 func Run() {
 	// 定义要执行的命令（例如：运行一个 Python 脚本）
+	// -u : 取消缓冲，实时输出
+	// -c : 执行一段python代码
 	cmd := exec.Command("python", "-u", "-c", `user_input = input(); print("child get message: " + user_input)`)
 
 	// 获取子进程的标准输入、输出和错误流

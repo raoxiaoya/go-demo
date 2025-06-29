@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"go-demo/leetcode"
 	"os"
 	"strings"
@@ -92,4 +93,15 @@ func data() {
 		}
 		dst.WriteString("\n")
 	}
+}
+
+func cal() {
+	sum := 60.0
+	add := 10.0
+
+	for range 5 {
+		sum = sum + sum * 0.1 + add
+	}
+
+	fmt.Println(sum) // 157.6816
 }
