@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"go-demo/leetcode"
+	bitdownload "go-demo/demos/bit_download"
 	"os"
 	"strings"
 )
@@ -41,7 +41,9 @@ func main() {
 
 	// child_process_stdio.Run()
 
-	leetcode.Run()
+	bitdownload.Run()
+
+	// parallel_download.Run()
 }
 
 func data() {
