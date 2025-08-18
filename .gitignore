@@ -1,4 +1,5 @@
 *.zip
 *.temp
 *.exe
-*.iso
+*.db
+SONE-201

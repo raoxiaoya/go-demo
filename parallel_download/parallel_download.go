@@ -16,6 +16,8 @@ package parallel_download
 153M
 https://download.virtualbox.org/virtualbox/6.1.6/VirtualBox-6.1.6.tar.bz2
 
+83M
+https://2.na.dl.wireshark.org/win64/Wireshark-4.4.8-x64.exe
 */
 
 import (

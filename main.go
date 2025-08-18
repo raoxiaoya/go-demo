@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	bitdownload "go-demo/demos/bit_download"
+	"go-demo/demos/bit_download"
 	"os"
 	"strings"
 )
@@ -41,7 +41,7 @@ func main() {
 
 	// child_process_stdio.Run()
 
-	bitdownload.Run()
+	bit_download.Run()
 
 	// parallel_download.Run()
 }
